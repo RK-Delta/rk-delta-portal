@@ -5,24 +5,26 @@ export type ContactSocial = {
 };
 
 export type ContactContent = {
+  intro: string;
+  responseNote: string;
   email: string;
+  whatsappNumber: string;
   socials: ContactSocial[];
 };
 
 export const contact: ContactContent = {
-  email: "hello@rkdelta.com",
+  intro:
+    "Got a question about a venture, a partnership idea, or feedback on the site? We'd love to hear it.",
+  responseNote: "We typically respond within 1-2 business days.",
+  email: "rkdelta81@gmail.com",
+  whatsappNumber: "+917651914183",
   socials: [
-    { platform: "X", url: "https://x.com/rkdelta", icon: "X" },
     {
       platform: "LinkedIn",
       url: "https://www.linkedin.com/company/rkdelta",
-      icon: "Briefcase",
+      icon: "Linkedin",
     },
-    { platform: "GitHub", url: "https://github.com/rkdelta", icon: "Link" },
-    {
-      platform: "Instagram",
-      url: "https://instagram.com/rkdelta",
-      icon: "Camera",
-    },
+    { platform: "X", url: "https://x.com/rk_delta", icon: "X" },
+    { platform: "GitHub", url: "https://github.com/rkdelta", icon: "Github" },
   ],
 };

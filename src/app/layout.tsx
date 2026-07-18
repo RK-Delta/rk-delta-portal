@@ -5,6 +5,8 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { NotificationProvider } from "@/components/NotificationProvider";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { ScrollToTop } from "@/components/ScrollToTop";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,6 +54,10 @@ export default function RootLayout({
         >
           <NotificationProvider>
             <Navbar />
+      
+            <ScrollToTop />
+            <WhatsAppButton />
+
             <main className="flex-1">{children}</main>
             <Footer />
           </NotificationProvider>
