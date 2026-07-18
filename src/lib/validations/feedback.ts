@@ -19,7 +19,7 @@ export const feedbackSchema = z.object({
     .max(2000, "Message is too long"),
   // Intentionally unconstrained: a filled value marks the submission as a
   // bot and is checked explicitly in the API route, not rejected here.
-  honeypot: z.string().optional(),
+  date: z.string(),
 });
 
 export type FeedbackInput = z.infer<typeof feedbackSchema>;

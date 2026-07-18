@@ -54,7 +54,8 @@ export function FeedbackForm() {
       name: "",
       email: "",
       message: "",
-      honeypot: "",
+      category: "General",
+      date: String(new Date()),
     },
   });
 
@@ -101,7 +102,7 @@ export function FeedbackForm() {
               tabIndex={-1}
               autoComplete="off"
               aria-hidden="true"
-              {...register("honeypot")}
+              {...register("date")}
             />
           </div>
 

@@ -18,26 +18,44 @@ export async function POST(request: Request) {
     );
   }
 
-  const { honeypot, ...submission } = result.data;
-  if (honeypot) {
-    return NextResponse.json({ ok: true });
-  }
+  const { date, ...submission } = result.data;
 
-  const webhookUrl = process.env.FEEDBACK_SHEET_WEBHOOK_URL;
-  if (!webhookUrl) {
+  const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
+  const webhookSecret = process.env.FEEDBACK_WEBHOOK_SECRET;
+  if (!webhookUrl || !webhookSecret) {
     return NextResponse.json(
       { error: "Feedback delivery is not configured" },
       { status: 500 },
     );
   }
 
-  const response = await fetch(webhookUrl, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(submission),
+  const params = new URLSearchParams({
+    name: submission.name,
+    email: submission.email,
+    category: submission.category,
+    message: submission.message,
+    secret: webhookSecret,
   });
 
-  if (!response.ok) {
+  const response = await fetch(webhookUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: params,
+  });
+
+  let data: unknown;
+  try {
+    data = await response.json();
+  } catch {
+    data = null;
+  }
+
+  const webhookResult =
+    typeof data === "object" && data !== null && "result" in data
+      ? (data as { result?: unknown }).result
+      : undefined;
+
+  if (!response.ok || webhookResult !== "success") {
     return NextResponse.json(
       { error: "Failed to deliver feedback" },
       { status: 502 },
