@@ -12,15 +12,7 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/ThemeToggle";
-
-const NAV_LINKS = [
-  { href: "#about", label: "About" },
-  { href: "#ventures", label: "Ventures" },
-  { href: "#services", label: "Services" },
-  { href: "#roadmap", label: "Roadmap" },
-  { href: "#updates", label: "Updates" },
-  { href: "#feedback", label: "Feedback" },
-];
+import { NAV_LINKS } from "@/lib/nav-links";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -32,7 +24,7 @@ export function Navbar() {
         className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8"
       >
         <a
-          href="#"
+          href="#top"
           className="text-h3 font-semibold text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--accent)]"
         >
           RK Delta

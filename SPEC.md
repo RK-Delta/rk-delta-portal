@@ -7,12 +7,13 @@ upcoming ventures, and collect feedback from visitors.
 ## Sections
 1. **Hero / Landing** — tagline, CTA, subtle animated background
 2. **About RK Delta** — mission, story, founding visionv
-3. **Viblooop** - our upcoming and most highlighted section lunching soon
-4. **Ventures / Coming Companies** — cards per upcoming company, status badges (Coming Soon / Live)
-5. **Services / Features** — what RK Delta offers, icon + short copy grid
-6. **Future Goals / Roadmap** — Animated timeline component
-7. **Feedback Form** — name, email, message, category dropdown, validated, sends to backend/email
-8. **Footer** — contact info, socials, sitemap links
+3. **Founders** - Two founders - Kamrujama Ansari & Ravi Shankar Jaiswal
+4. **Viblooop** - our upcoming and most highlighted section lunching soon
+5. **Ventures / Coming Companies** — cards per upcoming company, status badges (Coming Soon / Live)
+6. **Services / Features** — what RK Delta offers, icon + short copy grid
+7. **Future Goals / Roadmap** — Animated timeline component
+8. **Feedback Form** — name, email, message, category dropdown, validated, sends to backend/email
+9. **Footer** — contact info, socials, sitemap links
 
 ## Design direction
 - Modern, confident, slightly premium — not generic SaaS-template look
