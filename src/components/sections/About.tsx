@@ -1,7 +1,9 @@
 "use client";
 
+import { Compass } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 
+import { SectionHeading } from "@/components/SectionHeading";
 import { about } from "@/content/about";
 import { staggerItemVariants } from "@/lib/motion-variants";
 
@@ -35,7 +37,7 @@ export function About() {
         whileInView="show"
         viewport={{ once: true, amount: 0.2 }}
       >
-        <h1 className="text-h1 text-[var(--text-primary)]">About RK Delta</h1>
+        <SectionHeading eyebrow="Our story" eyebrowIcon={Compass} title="About RK Delta" />
         <p className="mt-6 max-w-prose text-h3 text-[var(--text-primary)]">
           {about.mission}
         </p>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { Check } from "lucide-react";
+import { Check, Lock, Map } from "lucide-react";
 import {
   motion,
   useReducedMotion,
@@ -9,6 +9,7 @@ import {
   useTransform,
 } from "framer-motion";
 
+import { SectionHeading } from "@/components/SectionHeading";
 import { roadmap, type RoadmapMilestone, type RoadmapStatus } from "@/content/roadmap";
 import { cn } from "@/lib/utils";
 
@@ -34,16 +35,22 @@ function NodeMarker({ status }: { status: RoadmapStatus }) {
         {status === "done" && (
           <Check className="h-4 w-4 text-[var(--bg)]" aria-hidden="true" />
         )}
+        {status === "planned" && (
+          <Lock
+            className="h-3.5 w-3.5 text-[var(--text-secondary)]"
+            aria-hidden="true"
+          />
+        )}
       </span>
     </div>
   );
 }
 
 function MilestoneCard({ milestone }: { milestone: RoadmapMilestone }) {
-  const periodColor =
-    milestone.status === "planned"
-      ? "text-[var(--text-secondary)]"
-      : "text-[var(--accent)]";
+  const isPlanned = milestone.status === "planned";
+  const periodColor = isPlanned
+    ? "text-[var(--text-secondary)]"
+    : "text-[var(--accent)]";
 
   return (
     <div className="rounded-lg border border-[var(--text-secondary)]/10 bg-[var(--surface)] p-5">
@@ -55,13 +62,76 @@ function MilestoneCard({ milestone }: { milestone: RoadmapMilestone }) {
       >
         {milestone.period}
       </p>
-      <h3 className="mt-1 text-h3 text-[var(--text-primary)]">
+      {/* Only the title (text-primary, ~9-19:1 baseline contrast) gets the
+          opacity fade for "planned" — text-secondary below is already the
+          muted tone and sits too close to the AA floor to fade further
+          without failing 4.5:1 (verified: ~4.6:1 at 100%, drops under 4:1
+          by 80-90% opacity in both themes). The lock icon + muted period
+          label carry the "not yet active" signal instead. */}
+      <h3
+        className={cn(
+          "mt-1 text-h3 text-[var(--text-primary)]",
+          isPlanned && "opacity-75",
+        )}
+      >
         {milestone.title}
       </h3>
       <p className="mt-2 text-small text-[var(--text-secondary)]">
         {milestone.description}
       </p>
     </div>
+  );
+}
+
+function RoadmapItem({
+  milestone,
+  isEven,
+  shouldReduceMotion,
+}: {
+  milestone: RoadmapMilestone;
+  isEven: boolean;
+  shouldReduceMotion: boolean | null;
+}) {
+  const itemRef = useRef<HTMLLIElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: itemRef,
+    offset: ["start end", "end start"],
+  });
+  const proximityOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.2, 0.5, 0.8, 1],
+    [0.45, 1, 1, 1, 0.45],
+  );
+  const proximityScale = useTransform(
+    scrollYProgress,
+    [0, 0.2, 0.5, 0.8, 1],
+    [0.94, 1, 1, 1, 0.94],
+  );
+
+  return (
+    <li
+      ref={itemRef}
+      className="flex gap-4 md:grid md:grid-cols-[1fr_2rem_1fr] md:items-start md:gap-8"
+    >
+      <div className="flex w-8 shrink-0 justify-center md:col-start-2 md:justify-self-center">
+        <NodeMarker status={milestone.status} />
+      </div>
+
+      <motion.div
+        style={
+          shouldReduceMotion
+            ? undefined
+            : { opacity: proximityOpacity, scale: proximityScale }
+        }
+        className={cn(
+          "min-w-0 flex-1",
+          isEven ? "md:col-start-1" : "md:col-start-3",
+        )}
+      >
+        <MilestoneCard milestone={milestone} />
+      </motion.div>
+    </li>
   );
 }
 
@@ -77,10 +147,12 @@ export function Roadmap() {
 
   return (
     <section id="roadmap">
-      <h1 className="text-h1 text-[var(--text-primary)]">Roadmap</h1>
-      <p className="mt-3 max-w-2xl text-body text-[var(--text-secondary)]">
-        Where RK Delta is headed next, and the milestones along the way.
-      </p>
+      <SectionHeading
+        eyebrow="What's next"
+        eyebrowIcon={Map}
+        title="Roadmap"
+        subtitle="Where RK Delta is headed next, and the milestones along the way."
+      />
 
       <div ref={containerRef} className="relative mt-14">
         <div
@@ -98,36 +170,14 @@ export function Roadmap() {
         />
 
         <ol className="relative flex flex-col gap-12">
-          {roadmap.map((milestone, index) => {
-            const isEven = index % 2 === 0;
-            return (
-              <li
-                key={milestone.title}
-                className="flex gap-4 md:grid md:grid-cols-[1fr_2rem_1fr] md:items-start md:gap-8"
-              >
-                <div className="flex w-8 shrink-0 justify-center md:col-start-2 md:justify-self-center">
-                  <NodeMarker status={milestone.status} />
-                </div>
-
-                <motion.div
-                  initial={
-                    shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 }
-                  }
-                  whileInView={
-                    shouldReduceMotion ? undefined : { opacity: 1, y: 0 }
-                  }
-                  viewport={{ once: true, amount: 0.5 }}
-                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  className={cn(
-                    "min-w-0 flex-1",
-                    isEven ? "md:col-start-1" : "md:col-start-3",
-                  )}
-                >
-                  <MilestoneCard milestone={milestone} />
-                </motion.div>
-              </li>
-            );
-          })}
+          {roadmap.map((milestone, index) => (
+            <RoadmapItem
+              key={milestone.title}
+              milestone={milestone}
+              isEven={index % 2 === 0}
+              shouldReduceMotion={shouldReduceMotion}
+            />
+          ))}
         </ol>
       </div>
     </section>

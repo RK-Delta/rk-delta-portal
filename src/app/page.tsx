@@ -5,6 +5,7 @@ import { Founders } from "@/components/sections/Founders";
 import { Ventures } from "@/components/sections/Ventures";
 import { Services } from "@/components/sections/Services";
 import { Roadmap } from "@/components/sections/Roadmap";
+import { Feedback } from "@/components/sections/Feedback";
 import { Contact } from "@/components/sections/Contact";
 
 export default function Home() {
@@ -23,20 +24,11 @@ export default function Home() {
 
         <Roadmap />
 
-        {/* <div className="grid grid-cols-1 gap-12 lg:grid-cols-[3fr_2fr] lg:items-center lg:gap-16">
-          <section id="feedback">
-            <h1 className="text-h1 text-[var(--text-primary)]">Feedback</h1>
-            <p className="mt-3 max-w-2xl text-body text-[var(--text-secondary)]">
-              Questions, ideas, or just want to say hello — we read every
-              submission.
-            </p>
-            <div className="mt-8">
-              <FeedbackForm />
-            </div>
-          </section> */}
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[3fr_2fr] lg:items-center lg:gap-16">
+          <Feedback />
 
           <Contact />
-        {/* </div> */}
+        </div>
       </div>
     </>
   );

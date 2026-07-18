@@ -1,7 +1,9 @@
 "use client";
 
+import { Rocket } from "lucide-react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 
+import { SectionHeading } from "@/components/SectionHeading";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ventures } from "@/content/ventures";
@@ -31,11 +33,12 @@ export function Ventures() {
 
   return (
     <section id="ventures">
-      <h1 className="text-h1 text-[var(--text-primary)]">Ventures</h1>
-      <p className="mt-3 max-w-2xl text-body text-[var(--text-secondary)]">
-        A growing portfolio of companies we&apos;re designing, launching, and
-        growing from the ground up.
-      </p>
+      <SectionHeading
+        eyebrow="What we're building"
+        eyebrowIcon={Rocket}
+        title="Ventures"
+        subtitle="A growing portfolio of companies we're designing, launching, and growing from the ground up."
+      />
 
       <motion.div
         variants={container}

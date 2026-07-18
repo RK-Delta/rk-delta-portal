@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { Check } from "lucide-react";
+import { Check, Users } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 
+import { SectionHeading } from "@/components/SectionHeading";
 import { Card, CardContent } from "@/components/ui/card";
 import { founders, type Founder } from "@/content/founders";
 import { cn } from "@/lib/utils";
@@ -118,10 +119,12 @@ export function Founders() {
 
   return (
     <section id="founders">
-      <h1 className="text-h1 text-[var(--text-primary)]">Founders</h1>
-      <p className="mt-3 max-w-2xl text-body text-[var(--text-secondary)]">
-        The two people building RK Delta from the ground up.
-      </p>
+      <SectionHeading
+        eyebrow="Meet the team"
+        eyebrowIcon={Users}
+        title="Founders"
+        subtitle="The two people building RK Delta from the ground up."
+      />
 
       <motion.div
         variants={staggerContainerVariants(shouldReduceMotion)}

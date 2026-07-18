@@ -3,6 +3,7 @@
 import {
   Code2,
   HandCoins,
+  Layers,
   LineChart,
   Rocket,
   Settings2,
@@ -11,6 +12,7 @@ import {
 } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 
+import { SectionHeading } from "@/components/SectionHeading";
 import { services } from "@/content/services";
 import { staggerContainerVariants, staggerItemVariants } from "@/lib/motion-variants";
 
@@ -28,11 +30,12 @@ export function Services() {
 
   return (
     <section id="services">
-      <h1 className="text-h1 text-[var(--text-primary)]">Services</h1>
-      <p className="mt-3 max-w-2xl text-body text-[var(--text-secondary)]">
-        Everything a venture needs to go from idea to sustained operation,
-        under one roof.
-      </p>
+      <SectionHeading
+        eyebrow="How we help"
+        eyebrowIcon={Layers}
+        title="Services"
+        subtitle="Everything a venture needs to go from idea to sustained operation, under one roof."
+      />
 
       <motion.div
         variants={staggerContainerVariants(shouldReduceMotion)}
