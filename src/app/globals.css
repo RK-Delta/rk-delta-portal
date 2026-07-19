@@ -10,6 +10,10 @@
   --text-primary: #1d1d1f;
   --text-secondary: #6e6e73;
   --accent: #087f5b;
+  /* Reasonable estimate for first paint; MobileBottomNav corrects this to the
+     pill's real measured height once mounted. Zeroed at md+ since the nav is
+     mobile-only (md:hidden) there. */
+  --mobile-nav-clearance: 88px;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -164,13 +168,19 @@
   }
 }
 
+@media (min-width: 768px) {
+  :root {
+    --mobile-nav-clearance: 0px;
+  }
+}
+
 @theme {
   --animate-hero-blob-a: hero-blob-a 24s ease-in-out infinite;
   --animate-hero-blob-b: hero-blob-b 28s ease-in-out infinite;
-  --animate-hero-delta: hero-delta-pulse 16s ease-in-out infinite;
   --animate-viblooop-grid: viblooop-grid-drift 40s linear infinite;
   --animate-viblooop-gradient: viblooop-gradient-shift 6s ease-in-out infinite;
   --animate-whatsapp-pulse: whatsapp-pulse 2.8s ease-in-out infinite;
+  --animate-hero-headline-sheen: hero-headline-sheen 2s cubic-bezier(0.4, 0, 0.2, 1) 0.5s 1 both;
 }
 
 @keyframes hero-blob-a {
@@ -190,18 +200,6 @@
   }
   50% {
     transform: translate(-6%, -6%) scale(1.1);
-  }
-}
-
-@keyframes hero-delta-pulse {
-  0%,
-  100% {
-    transform: scale(1) rotate(0deg);
-    opacity: 0.05;
-  }
-  50% {
-    transform: scale(1.04) rotate(1.5deg);
-    opacity: 0.09;
   }
 }
 
@@ -231,6 +229,15 @@
   }
   50% {
     box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+  }
+}
+
+@keyframes hero-headline-sheen {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -100% 0;
   }
 }
 

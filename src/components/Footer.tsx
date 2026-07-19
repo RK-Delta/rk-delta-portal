@@ -1,4 +1,5 @@
-import { NAV_LINKS } from "@/lib/nav-links";
+import Link from "next/link";
+import { FOOTER_EXPLORE_LINKS, FOOTER_COMPANY_LINKS } from "@/lib/nav-links";
 import { contact } from "@/content/contact";
 import { SOCIAL_ICONS } from "@/lib/social-icons";
 
@@ -6,24 +7,24 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-[var(--surface)]">
+    <footer className="relative mt-auto bg-[var(--surface)] pb-[calc(var(--mobile-nav-clearance)+env(safe-area-inset-bottom))]">
       <div
         aria-hidden="true"
         className="h-px w-full bg-gradient-to-r from-transparent via-[var(--accent)]/40 to-transparent"
       />
 
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-          <div className="flex flex-col gap-4">
-            <a
-              href="#top"
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-8">
+          <div className="flex flex-col gap-4 lg:col-span-2">
+            <Link
+              href="/"
               className="inline-flex items-center gap-1.5 text-h3 font-semibold text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--accent)]"
             >
               <span aria-hidden="true" className="text-[var(--accent)]">
                 Δ
               </span>
               RK DELTA
-            </a>
+            </Link>
             <p className="max-w-xs text-small text-[var(--text-secondary)]">
               A venture studio designing, launching, and growing a portfolio
               of ambitious new companies.
@@ -47,22 +48,37 @@ export function Footer() {
             </div>
           </div>
 
-          <nav aria-label="Footer sitemap" className="flex flex-col gap-2">
+          <nav aria-label="Explore" className="flex flex-col gap-2">
             <p className="text-small font-medium text-[var(--text-primary)]">
-              Sitemap
+              Explore
             </p>
-            {NAV_LINKS.map((link) => (
-              <a
+            {FOOTER_EXPLORE_LINKS.map((link) => (
+              <Link
                 key={link.href}
                 href={link.href}
                 className="text-small text-[var(--text-secondary)] transition-colors duration-200 hover:text-[var(--accent)]"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
-          <div className="flex flex-col gap-2">
+          <nav aria-label="Company" className="flex flex-col gap-2">
+            <p className="text-small font-medium text-[var(--text-primary)]">
+              Company
+            </p>
+            {FOOTER_COMPANY_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-small text-[var(--text-secondary)] transition-colors duration-200 hover:text-[var(--accent)]"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex flex-col gap-3">
             <p className="text-small font-medium text-[var(--text-primary)]">
               Contact
             </p>
@@ -80,22 +96,12 @@ export function Footer() {
             >
               Chat on WhatsApp
             </a>
-          </div>
-
-          <div className="flex flex-col gap-3">
-            <p className="text-small font-medium text-[var(--text-primary)]">
-              Have an idea?
-            </p>
-            <p className="text-small text-[var(--text-secondary)]">
-              Tell us what you&apos;re building or thinking about — we read
-              every message.
-            </p>
-            <a
-              href="#feedback"
-              className="mt-1 inline-flex w-fit items-center rounded-lg bg-[var(--accent)] px-4 py-2 text-small font-medium text-[var(--bg)] transition-colors duration-200 hover:bg-[var(--accent)]/90"
+            <Link
+              href="/feedback"
+              className="mt-2 inline-flex w-fit items-center rounded-lg bg-[var(--accent)] px-4 py-2 text-small font-medium text-[var(--bg)] transition-colors duration-200 hover:bg-[var(--accent)]/90"
             >
               Send feedback
-            </a>
+            </Link>
           </div>
         </div>
 

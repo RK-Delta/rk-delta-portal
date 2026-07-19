@@ -46,39 +46,61 @@ function NodeMarker({ status }: { status: RoadmapStatus }) {
   );
 }
 
-function MilestoneCard({ milestone }: { milestone: RoadmapMilestone }) {
+function MilestoneCard({ milestone, shouldReduceMotion }: { milestone: RoadmapMilestone; shouldReduceMotion: boolean | null }) {
   const isPlanned = milestone.status === "planned";
+  const isInProgress = milestone.status === "in-progress";
   const periodColor = isPlanned
     ? "text-[var(--text-secondary)]"
     : "text-[var(--accent)]";
 
   return (
-    <div className="rounded-lg border border-[var(--text-secondary)]/10 bg-[var(--surface)] p-5">
-      <p
-        className={cn(
-          "text-small font-medium tracking-wide uppercase",
-          periodColor,
-        )}
-      >
-        {milestone.period}
-      </p>
-      {/* Only the title (text-primary, ~9-19:1 baseline contrast) gets the
-          opacity fade for "planned" — text-secondary below is already the
-          muted tone and sits too close to the AA floor to fade further
-          without failing 4.5:1 (verified: ~4.6:1 at 100%, drops under 4:1
-          by 80-90% opacity in both themes). The lock icon + muted period
-          label carry the "not yet active" signal instead. */}
-      <h3
-        className={cn(
-          "mt-1 text-h3 text-[var(--text-primary)]",
-          isPlanned && "opacity-75",
-        )}
-      >
-        {milestone.title}
-      </h3>
-      <p className="mt-2 text-small text-[var(--text-secondary)]">
-        {milestone.description}
-      </p>
+    <div className={cn(
+      "relative overflow-hidden rounded-lg border bg-[var(--surface)] p-5 transition-colors",
+      isInProgress ? "border-[var(--accent)]/30" : "border-[var(--text-secondary)]/10"
+    )}>
+      {/* Sweeping Premium Glow Background for In-Progress milestones */}
+      {isInProgress && !shouldReduceMotion && (
+        <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+          <motion.div
+            animate={{ left: ["-100%", "200%"] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-0 bottom-0 w-1/2 opacity-40 blur-2xl"
+            style={{
+              background: "linear-gradient(90deg, transparent, var(--accent), transparent)",
+            }}
+          />
+        </div>
+      )}
+
+      <div className={cn("relative z-10", isPlanned && "opacity-60")}>
+        <p
+          className={cn(
+            "text-small font-medium tracking-wide uppercase",
+            periodColor,
+          )}
+        >
+          {milestone.period}
+        </p>
+        <h3
+          className={cn(
+            "mt-1 text-h3 text-[var(--text-primary)]"
+          )}
+        >
+          {milestone.title}
+        </h3>
+        <p className="mt-2 text-small text-[var(--text-secondary)]">
+          {milestone.description}
+        </p>
+      </div>
+
+      {/* Frosted Lock Overlay for Planned milestones */}
+      {isPlanned && (
+        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[var(--surface)]/20 backdrop-blur-[3px]">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--bg)]/80 shadow-sm border border-[var(--text-secondary)]/10 backdrop-blur-md">
+            <Lock className="h-5 w-5 text-[var(--text-secondary)]" aria-hidden="true" />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -129,7 +151,7 @@ function RoadmapItem({
           isEven ? "md:col-start-1" : "md:col-start-3",
         )}
       >
-        <MilestoneCard milestone={milestone} />
+        <MilestoneCard milestone={milestone} shouldReduceMotion={shouldReduceMotion} />
       </motion.div>
     </li>
   );

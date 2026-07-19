@@ -18,6 +18,7 @@ export async function POST(request: Request) {
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { date, ...submission } = result.data;
 
   const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;

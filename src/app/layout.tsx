@@ -5,8 +5,9 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { NotificationProvider } from "@/components/NotificationProvider";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { ScrollToTop } from "@/components/ScrollToTop";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { PageTransition } from "@/components/PageTransition";
+import { MobileBottomNav } from "@/components/MobileBottomNav";
+import { FixedIcons } from "@/components/sections/FixedIcons";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -54,12 +55,12 @@ export default function RootLayout({
         >
           <NotificationProvider>
             <Navbar />
-      
-            <ScrollToTop />
-            <WhatsAppButton />
-
-            <main className="flex-1">{children}</main>
+            <FixedIcons />
+            <main className="flex-1 flex flex-col">
+              <PageTransition>{children}</PageTransition>
+            </main>
             <Footer />
+            <MobileBottomNav />
           </NotificationProvider>
         </ThemeProvider>
       </body>

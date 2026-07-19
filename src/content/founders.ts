@@ -13,8 +13,8 @@ export const founders: Founder[] = [
     bio: "Full-stack developer who has led engineering on a range of web platforms end to end, from architecture through to production. Focused on building systems that are meant to last, not just ship.",
     highlights: [
       "Led engineering as lead developer across multiple production platforms",
-      "Built an edtech platform from scratch for Madarsa Madinatul Olum, Nepal",
-      "Full-stack across React, Node.js, and cloud infrastructure",
+      "Built an edtech platform from scratch for 100k+ users, including architecture, backend, and frontend",
+      "Full-stack across Angular, React, NextJs, Node.js, and cloud infrastructure",
     ],
   },
   {

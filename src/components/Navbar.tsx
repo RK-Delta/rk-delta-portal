@@ -1,85 +1,142 @@
 "use client";
 
-import { useState } from "react";
-import { Menu } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetClose,
-} from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { NAV_LINKS } from "@/lib/nav-links";
+import { MAIN_NAV_LINKS } from "@/lib/nav-links";
+import { cn } from "@/lib/utils";
+
+interface NavLinkProps {
+  href: string;
+  label: string;
+  isActive: boolean;
+  shouldReduceMotion: boolean | null;
+}
+
+function NavLink({
+  href,
+  label,
+  isActive,
+  shouldReduceMotion,
+}: NavLinkProps) {
+  const transition = shouldReduceMotion
+    ? { duration: 0 }
+    : { type: "spring" as const, stiffness: 500, damping: 30, mass: 1 };
+
+  return (
+    <Link
+      href={href}
+      aria-current={isActive ? "page" : undefined}
+      className={cn(
+        "group relative block rounded-full outline-none",
+        "focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]",
+        "px-4 py-1.5 text-small font-medium transition-colors duration-200",
+        isActive
+          ? "text-[var(--text-primary)]"
+          : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] focus-visible:text-[var(--text-primary)]"
+      )}
+    >
+      {isActive && (
+        <motion.span
+          layoutId="nav-active-indicator"
+          className="absolute inset-0 z-0 rounded-full bg-[var(--text-secondary)]/10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={transition}
+        />
+      )}
+      <span className="relative z-10">{label}</span>
+    </Link>
+  );
+}
 
 export function Navbar() {
-  const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const shouldReduceMotion = useReducedMotion();
+
+  const navVariants: Variants = {
+    hidden: {},
+    show: {
+      transition: { staggerChildren: shouldReduceMotion ? 0 : 0.08 },
+    },
+  };
+
+  const logoVariants: Variants = {
+    hidden: shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.85 },
+    show: {
+      opacity: 1,
+      scale: 1,
+      transition: shouldReduceMotion
+        ? { duration: 0 }
+        : { type: "spring", stiffness: 500, damping: 15, mass: 0.5 },
+    },
+  };
+
+  const linksListVariants: Variants = {
+    hidden: {},
+    show: {
+      transition: { staggerChildren: shouldReduceMotion ? 0 : 0.05 },
+    },
+  };
+
+  const linkItemVariants: Variants = {
+    hidden: shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.7 },
+    show: {
+      opacity: 1,
+      scale: 1,
+      transition: shouldReduceMotion
+        ? { duration: 0 }
+        : { type: "spring", stiffness: 500, damping: 15, mass: 0.5 },
+    },
+  };
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur">
-      <nav
+      <motion.nav
+        variants={navVariants}
+        initial="hidden"
+        animate="show"
         aria-label="Main"
         className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8"
       >
-        <a
-          href="#top"
-          className="text-h3 font-semibold text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--accent)]"
+        <motion.div variants={logoVariants}>
+          <Link
+            href="/"
+            className="text-h3 font-semibold text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--accent)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded"
+          >
+            RK Delta
+          </Link>
+        </motion.div>
+
+        <motion.ul
+          variants={linksListVariants}
+          className="hidden items-center gap-1 md:flex"
         >
-          RK Delta
-        </a>
-
-        <div className="hidden items-center gap-8 md:flex">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-small text-[var(--text-secondary)] transition-colors duration-200 hover:text-[var(--text-primary)]"
-            >
-              {link.label}
-            </a>
+          {MAIN_NAV_LINKS.map((link) => (
+            <motion.li key={link.href} variants={linkItemVariants}>
+              <NavLink
+                href={link.href}
+                label={link.label}
+                isActive={pathname === link.href}
+                shouldReduceMotion={shouldReduceMotion}
+              />
+            </motion.li>
           ))}
-        </div>
+        </motion.ul>
 
-        <div className="hidden items-center gap-3 md:flex">
+        {/* Desktop CTA & Theme Toggle (Always visible on desktop, theme toggle visible on mobile) */}
+        <div className="flex items-center gap-3">
           <ThemeToggle />
-          <Button asChild size="sm">
-            <a href="#feedback">Get in Touch</a>
-          </Button>
-        </div>
-
-        <div className="flex items-center gap-2 md:hidden">
-          <ThemeToggle />
-          <Sheet open={open} onOpenChange={setOpen}>
-            <Button
-              variant="ghost"
-              size="icon"
-              aria-label="Open menu"
-              onClick={() => setOpen(true)}
-            >
-              <Menu className="h-5 w-5" aria-hidden="true" />
+          <div className="hidden md:block">
+            <Button asChild size="sm">
+              <Link href="/get-in-touch">Get in Touch</Link>
             </Button>
-            <SheetContent side="right">
-              <SheetHeader>
-                <SheetTitle>Menu</SheetTitle>
-              </SheetHeader>
-              <div className="flex flex-col gap-1 px-4">
-                {NAV_LINKS.map((link) => (
-                  <SheetClose asChild key={link.href}>
-                    <a
-                      href={link.href}
-                      className="rounded-md px-2 py-2.5 text-body text-[var(--text-primary)] transition-colors duration-200 hover:bg-accent hover:text-accent-foreground"
-                    >
-                      {link.label}
-                    </a>
-                  </SheetClose>
-                ))}
-              </div>
-            </SheetContent>
-          </Sheet>
+          </div>
         </div>
-      </nav>
+      </motion.nav>
     </header>
   );
 }
