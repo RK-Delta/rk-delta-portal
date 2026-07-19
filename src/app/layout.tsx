@@ -20,18 +20,37 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://rk-delta-portal.vercel.app/"
+  ),
   title: {
     default: "RK Delta",
     template: "%s | RK Delta",
   },
   description:
-    "RK Delta is a venture studio launching new companies, products, and ideas.",
+    "RK Delta is a venture studio designing, launching, and growing a portfolio of ambitious new companies.",
   openGraph: {
     title: "RK Delta",
     description:
-      "RK Delta is a venture studio launching new companies, products, and ideas.",
+      "RK Delta is a venture studio designing, launching, and growing a portfolio of ambitious new companies.",
     siteName: "RK Delta",
     type: "website",
+    url: "/",
+    images: [
+      {
+        url: "/og-image.png", // Add your OG image to the public folder
+        width: 1200,
+        height: 630,
+        alt: "RK Delta - Venture Studio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "RK Delta",
+    description:
+      "RK Delta is a venture studio designing, launching, and growing a portfolio of ambitious new companies.",
+    images: ["/og-image.png"], // Add your OG image to the public folder
   },
 };
 

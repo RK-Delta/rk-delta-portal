@@ -27,11 +27,11 @@ export const ventures: Venture[] = [
     tagline: "Bookkeeping that explains itself.",
     status: "live",
     description:
-      "Automated bookkeeping for freelancers and small studios, with plain-language summaries instead of raw ledgers.",
+      "An innovative educational technology platform bridging the gap between classroom theory and real-world industry needs through skill-based training, internships, and personalized mentorship.",
   },
   {
-    name: "Fieldnote",
-    tagline: "Notes and reports for on-site teams.",
+    name: "Madarsa Madeenatul Olum",
+    tagline: "World-class modern education alongside traditional studies.",
     status: "live",
     description:
       "A lightweight field-reporting app for inspection and maintenance crews — offline-first, built for gloves and gravel, not desks.",
@@ -44,10 +44,10 @@ export const ventures: Venture[] = [
       "A calendar-first booking and payments tool for boat, gear, and equipment rental businesses currently stuck juggling spreadsheets and phone calls.",
   },
   {
-    name: "Studio Grade",
-    tagline: "Client feedback and approvals for creative teams.",
+    name: "Daily Links Nepal",
+    tagline: "Your daily directory for the latest updates in Nepal.",
     status: "live",
     description:
-      "A shared review space for designers and agencies to collect client feedback, track revisions, and get sign-off — without the email thread.",
-  },
+      "A comprehensive digital news portal and daily directory delivering the latest updates, trending topics, and essential digital resources across Nepal.",
+  }
 ];

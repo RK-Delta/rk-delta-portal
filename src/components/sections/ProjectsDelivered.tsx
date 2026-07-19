@@ -58,7 +58,7 @@ function ProjectCard({ project, shouldReduceMotion }: { project: Project; should
 
   return (
     <div
-      className="group relative flex h-full flex-col rounded-2xl"
+      className="group relative flex h-full w-full flex-col rounded-2xl max-w-sm md:max-w-full"
       onMouseMove={handleMouseMove}
     >
       {/* Spotlight Hover Glow (Disabled if reduced motion is active) */}
@@ -83,7 +83,7 @@ function ProjectCard({ project, shouldReduceMotion }: { project: Project; should
         "ring-1 ring-[var(--text-secondary)]/15 group-hover:ring-[var(--text-secondary)]/30",
         !shouldReduceMotion && "group-hover:ring-transparent" // Let the spotlight form the ring
       )}>
-        
+
         {/* Full card click target for accessibility */}
         <a
           href={project.url}
@@ -142,13 +142,13 @@ function ProjectCard({ project, shouldReduceMotion }: { project: Project; should
           {/* Spacer to push CTA to the bottom */}
           <div className="mt-auto pt-8">
             <span className="inline-flex items-center text-small font-medium text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent)]">
-              Visit site 
-              <ArrowUpRight 
+              Visit site
+              <ArrowUpRight
                 className={cn(
                   "ml-1 h-4 w-4 transition-transform duration-300",
                   !shouldReduceMotion && "group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                )} 
-                aria-hidden="true" 
+                )}
+                aria-hidden="true"
               />
             </span>
           </div>
