@@ -42,7 +42,7 @@ function ServiceCard({ service, shouldReduceMotion }: { service: any; shouldRedu
 
   return (
     <div
-      className="group relative flex h-full flex-col rounded-2xl"
+      className="group relative flex h-full w-[92dvw] sm:w-full flex-col rounded-2xl md:max-w-full"
       onMouseMove={handleMouseMove}
     >
       {/* Spotlight Hover Glow (Disabled if reduced motion is active) */}

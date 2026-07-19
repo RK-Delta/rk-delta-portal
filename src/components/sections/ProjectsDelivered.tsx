@@ -58,7 +58,7 @@ function ProjectCard({ project, shouldReduceMotion }: { project: Project; should
 
   return (
     <div
-      className="group relative flex h-full w-full flex-col rounded-2xl max-w-sm md:max-w-full"
+      className="group relative flex h-full w-[92dvw] sm:w-full flex-col rounded-2xl md:max-w-full"
       onMouseMove={handleMouseMove}
     >
       {/* Spotlight Hover Glow (Disabled if reduced motion is active) */}

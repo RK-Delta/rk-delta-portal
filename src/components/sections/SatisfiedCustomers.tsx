@@ -215,7 +215,7 @@ export function SatisfiedCustomers() {
 
         <div
           className={cn(
-            "flex w-[380px] md:w-max",
+            "flex w-[92dvw] sm:w-full md:max-w-full",
             !shouldReduceMotion && "hover:[&>div]:[animation-play-state:paused] focus-within:[&>div]:[animation-play-state:paused]",
             // Pause on touch start so mobile users can read/swipe
             isPaused && "[&>div]:[animation-play-state:paused]"
